@@ -84,6 +84,12 @@
         }
       }
 
+      @media (max-width: 500px) {
+        hstack[mobile-vertical=""] {
+          flex-direction: column;
+        }
+      }
+
       chip {
         border-radius: 0.5rem;
         padding: 0.25rem 0.5rem;
@@ -122,14 +128,13 @@
       </vstack>
       <vstack alignment="leading" padding>
         <text font="headline" foreground="gray6">Work Experience</text>
-        <hstack alignment="top" fullwidth>
+        <hstack alignment="top" fullwidth mobile-vertical>
           <text
             font="subheadline"
             foreground="gray"
             padding-xlarge
             padding="trailing"
             nowrap
-            style="min-width: 20%"
             >2021 - Now</text
           >
           <vstack alignment="leading">
@@ -173,14 +178,13 @@
           </vstack>
         </hstack>
         <spacer></spacer>
-        <hstack alignment="top" fullwidth>
+        <hstack alignment="top" fullwidth mobile-vertical>
           <text
             font="subheadline"
             foreground="gray"
             padding-xlarge
             padding="trailing"
             nowrap
-            style="min-width: 20%"
             >2018 - 2021</text
           >
           <vstack alignment="leading">
@@ -208,14 +212,13 @@
           </vstack>
         </hstack>
         <spacer></spacer>
-        <hstack alignment="top" fullwidth>
+        <hstack alignment="top" fullwidth mobile-vertical>
           <text
             font="subheadline"
             foreground="gray"
             padding-xlarge
             padding="trailing"
             nowrap
-            style="min-width: 20%"
             >2017 - 2017</text
           >
           <vstack alignment="leading">
@@ -246,14 +249,13 @@
           </vstack>
         </hstack>
         <spacer></spacer>
-        <hstack alignment="top" fullwidth>
+        <hstack alignment="top" fullwidth mobile-vertical>
           <text
             font="subheadline"
             foreground="gray"
             padding-xlarge
             padding="trailing"
             nowrap
-            style="min-width: 20%"
             >2012 - 2013</text
           >
           <vstack alignment="leading">
@@ -286,14 +288,13 @@
       </vstack>
       <vstack alignment="leading" padding fullwidth>
         <text font="headline" foreground="gray6">Education</text>
-        <hstack alignment="top" fullwidth>
+        <hstack alignment="top" fullwidth mobile-vertical>
           <text
             font="subheadline"
             foreground="gray"
             padding-xlarge
             padding="trailing"
             nowrap
-            style="min-width: 20%"
             >2015 - 2017</text
           >
           <vstack alignment="leading" nogap>
@@ -311,14 +312,13 @@
           </vstack>
         </hstack>
         <spacer></spacer>
-        <hstack alignment="top" fullwidth>
+        <hstack alignment="top" fullwidth mobile-vertical>
           <text
             font="subheadline"
             foreground="gray"
             padding-xlarge
             padding="trailing"
             nowrap
-            style="min-width: 20%"
             >2011 - 2015</text
           >
           <vstack alignment="leading" nogap>
