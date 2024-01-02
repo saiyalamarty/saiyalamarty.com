@@ -1,0 +1,17 @@
+{
+  "printWidth": 120,
+  "overrides": [
+    {
+      "files": "*.css",
+      "options": {
+        "printWidth": 120
+      }
+    },
+    {
+      "files": "*.html",
+      "options": {
+        "printWidth": 120
+      }
+    }
+  ]
+}
