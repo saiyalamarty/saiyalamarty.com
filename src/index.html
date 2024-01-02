@@ -24,17 +24,14 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <link href="./css/tailwind.css" rel="stylesheet" />
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const themeSwitcher = document.getElementById("theme-switcher");
+      (() => {
+        const savedTheme = localStorage.getItem("theme") || "system";
 
-        const themes = ["system", "light", "dark"];
-        let currentThemeIndex = 0; // Start with 'system' theme
-
-        // Function to set theme
-        const setTheme = (theme) => {
-          // Remove all previous theme classes
+        const applyTheme = (theme) => {
+          // Remove previous theme classes
           document.documentElement.classList.remove("dark", "system-theme");
 
+          // Handle system theme
           if (theme === "system") {
             theme = window.matchMedia("(prefers-color-scheme: dark)").matches
               ? "dark"
@@ -42,25 +39,49 @@
             document.documentElement.classList.add("system-theme");
           }
 
+          // Apply theme class
           if (theme === "dark") {
             document.documentElement.classList.add("dark");
           }
-
-          localStorage.setItem("theme", theme);
         };
 
-        // Load saved theme or system preference
+        applyTheme(savedTheme);
+      })();
+    </script>
+    <script>
+      // Event handling for theme switching
+      document.addEventListener("DOMContentLoaded", () => {
+        const themeSwitcher = document.getElementById("theme-switcher");
+        const themes = ["system", "light", "dark"];
         const savedTheme = localStorage.getItem("theme") || "system";
-        setTheme(savedTheme);
-        currentThemeIndex =
+        let currentThemeIndex =
           themes.indexOf(savedTheme) >= 0 ? themes.indexOf(savedTheme) : 0;
 
-        // Event listener for theme switcher
         themeSwitcher.addEventListener("click", () => {
           currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-          setTheme(themes[currentThemeIndex]);
+          localStorage.setItem("theme", themes[currentThemeIndex]);
+          applyTheme(themes[currentThemeIndex]);
         });
       });
+
+      // Reuse the applyTheme function
+      const applyTheme = (theme) => {
+        // Remove previous theme classes
+        document.documentElement.classList.remove("dark", "system-theme");
+
+        // Handle system theme
+        if (theme === "system") {
+          theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+          document.documentElement.classList.add("system-theme");
+        }
+
+        // Apply theme class
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+      };
     </script>
     <script>
       window.va =
@@ -94,11 +115,13 @@
             <span class="material-symbols-rounded theme-icon theme-dark">
               dark_mode
             </span>
-            <span class="material-symbols-rounded theme-icon theme-light">
+            <span
+              class="material-symbols-rounded theme-icon theme-light text-orange-400 shadow-orange-300 ![text-shadow:_0_0_12px_var(--tw-shadow-color)]"
+            >
               light_mode
             </span>
             <span class="material-symbols-rounded theme-icon theme-system">
-              monitor
+              night_sight_auto
             </span>
           </button>
         </div>
