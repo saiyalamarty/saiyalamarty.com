@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.theme-icon {
+  display: none !important;
+}
+
+html.system-theme .theme-icon.theme-system {
+  display: inline !important;
+}
+
+html.dark:not(.system-theme) .theme-icon.theme-dark {
+  display: inline !important;
+}
+
+html:not(.system-theme):not(.dark) .theme-icon.theme-light {
+  display: inline !important;
+}
