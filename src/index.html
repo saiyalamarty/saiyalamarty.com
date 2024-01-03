@@ -23,65 +23,99 @@
     <link rel="preconnect" href="https://rsms.me/" />
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <link href="./css/tailwind.css" rel="stylesheet" />
+    <!-- js script for 3-way theme toggle -->
     <script>
-      (() => {
-        const savedTheme = localStorage.getItem("theme") || "system";
+      function setMetaTag(theme) {
+        const existingMetaTag = document.head.querySelector(
+          'meta[name="theme-color"]',
+        );
 
-        const applyTheme = (theme) => {
-          // Remove previous theme classes
-          document.documentElement.classList.remove("dark", "system-theme");
+        if (existingMetaTag) {
+          document.head.removeChild(existingMetaTag);
+        }
 
-          // Handle system theme
-          if (theme === "system") {
-            theme = window.matchMedia("(prefers-color-scheme: dark)").matches
-              ? "dark"
-              : "light";
-            document.documentElement.classList.add("system-theme");
-          }
+        const newMetaTag = document.createElement("meta");
+        newMetaTag.setAttribute("name", "theme-color");
+        newMetaTag.setAttribute(
+          "content",
+          theme === "dark" ? "#262626" : "#ffffff",
+        );
+        document.head.appendChild(newMetaTag);
+      }
 
-          // Apply theme class
-          if (theme === "dark") {
-            document.documentElement.classList.add("dark");
-          }
-        };
+      function setHTMLThemeAttributes(theme) {
+        document.documentElement.classList.remove("dark", "light");
+        document.documentElement.classList.add(theme);
+        document.documentElement.style.colorScheme = theme;
+      }
 
-        applyTheme(savedTheme);
-      })();
-    </script>
-    <script>
-      // Event handling for theme switching
-      document.addEventListener("DOMContentLoaded", () => {
-        const themeSwitcher = document.getElementById("theme-switcher");
-        const themes = ["system", "light", "dark"];
-        const savedTheme = localStorage.getItem("theme") || "system";
-        let currentThemeIndex =
-          themes.indexOf(savedTheme) >= 0 ? themes.indexOf(savedTheme) : 0;
+      function setTheme(theme) {
+        setMetaTag(theme);
+        setHTMLThemeAttributes(theme);
+      }
 
-        themeSwitcher.addEventListener("click", () => {
-          currentThemeIndex = (currentThemeIndex + 1) % themes.length;
-          localStorage.setItem("theme", themes[currentThemeIndex]);
-          applyTheme(themes[currentThemeIndex]);
-        });
-      });
-
-      // Reuse the applyTheme function
-      const applyTheme = (theme) => {
-        // Remove previous theme classes
-        document.documentElement.classList.remove("dark", "system-theme");
-
-        // Handle system theme
-        if (theme === "system") {
-          theme = window.matchMedia("(prefers-color-scheme: dark)").matches
-            ? "dark"
-            : "light";
+      function setLocalStorage(themeSelection) {
+        localStorage.setItem("theme", themeSelection);
+        if (themeSelection === "system") {
           document.documentElement.classList.add("system-theme");
+        } else {
+          document.documentElement.classList.remove("system-theme");
+        }
+      }
+
+      (() => {
+        const themeSelection = localStorage.getItem("theme") || "system";
+        const systemPreferedTheme = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches
+          ? "dark"
+          : "light";
+
+        setLocalStorage(themeSelection);
+        if (themeSelection === "system") {
+          setTheme(systemPreferedTheme);
+        } else {
+          setTheme(themeSelection);
         }
 
-        // Apply theme class
-        if (theme === "dark") {
-          document.documentElement.classList.add("dark");
-        }
-      };
+        // Event handling for theme switching
+        document.addEventListener("DOMContentLoaded", () => {
+          const themeSwitcher = document.getElementById("theme-switcher");
+          const themes = ["system", "light", "dark"];
+
+          let currentThemeIndex =
+            themes.indexOf(themeSelection) >= 0
+              ? themes.indexOf(themeSelection)
+              : 0;
+
+          themeSwitcher.addEventListener("click", () => {
+            currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+
+            setLocalStorage(themes[currentThemeIndex]);
+            if (themes[currentThemeIndex] === "system") {
+              setTheme(systemPreferedTheme);
+            } else {
+              setTheme(themes[currentThemeIndex]);
+            }
+          });
+        });
+
+        window
+          .matchMedia("(prefers-color-scheme: dark)")
+          .addEventListener("change", (e) => {
+            if (e.matches && localStorage.getItem("theme") === "system") {
+              setTheme("dark");
+            }
+          });
+
+        window
+          .matchMedia("(prefers-color-scheme: light)")
+          .addEventListener("change", (e) => {
+            if (e.matches && localStorage.getItem("theme") === "system") {
+              setTheme("light");
+            }
+          });
+      })();
     </script>
     <script>
       window.va =
@@ -115,9 +149,7 @@
             <span class="material-symbols-rounded theme-icon theme-dark">
               dark_mode
             </span>
-            <span
-              class="material-symbols-rounded theme-icon theme-light text-orange-400 shadow-orange-300 ![text-shadow:_0_0_12px_var(--tw-shadow-color)]"
-            >
+            <span class="material-symbols-rounded theme-icon theme-light">
               light_mode
             </span>
             <span class="material-symbols-rounded theme-icon theme-system">
@@ -223,7 +255,7 @@
           <div
             class="min-w-40 whitespace-nowrap pr-16 text-neutral-500 dark:text-neutral-500"
           >
-            2017 - 2017
+            2017 - 2018
           </div>
           <div class="flex flex-col gap-3">
             <div class="flex flex-col">
