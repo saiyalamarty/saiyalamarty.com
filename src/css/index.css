@@ -24,11 +24,7 @@ html:not(.system-theme):not(.dark) .theme-icon.theme-light {
   font-feature-settings:
     "liga" 1,
     "calt" 1,
-    "ss01" 1,
-    "ss02" 1,
-    "cv12" 1,
-    "cv13" 1,
-    "tnum" 1;
+    "case" 1;
 }
 @supports (font-variation-settings: normal) {
   :root {
